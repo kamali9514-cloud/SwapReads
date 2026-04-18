@@ -22,17 +22,6 @@ Create your .env file
 cp .env.example .env
 
 
-Edit .env and fill in:
-
-env
-PORT=5000
-NODE_ENV=development
-MONGODB_URI=mongodb+srv://youruser:yourpass@cluster0.xxxxx.mongodb.net/swapreads
-JWT_SECRET=make_this_a_long_random_string_minimum_32_chars
-JWT_EXPIRE=7d
-CLIENT_URL=http://localhost:3000
-```
-
 MongoDB Atlas (free cloud DB):
 1. Go to https://cloud.mongodb.com → Create free cluster
 2. Database Access → Add user with password
@@ -51,11 +40,11 @@ You should see:
 
 
  Security Features
-- Passwords hashed with **bcrypt** (12 rounds)
-- **JWT** authentication (7-day expiry)
-- **Rate limiting** (200 req/15 min)
-- **Helmet.js** security headers
-- Input validation with **express-validator**
+- Passwords hashed with bcrypt (12 rounds)
+- JWT authentication (7-day expiry)
+- Rate limiting (200 req/15 min)
+- Helmet.js security headers
+- Input validation with express-validator
 - XSS protection via HTML escaping in frontend
 - CORS configured to specific origin
 
