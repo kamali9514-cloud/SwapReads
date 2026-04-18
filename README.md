@@ -3,35 +3,6 @@ SwapReads — Real Backend Book Exchange Platform
 A full-stack book exchange web app where real users can list, search, and exchange books.
 
 
-Project Structure
-
-swapreads/
-├── backend/
-│   ├── config/
-│   │   └── db.js              # MongoDB connection
-│   ├── middleware/
-│   │   └── auth.js            # JWT auth middleware
-│   ├── models/
-│   │   ├── User.js            # User schema
-│   │   ├── Book.js            # Book schema
-│   │   ├── Wishlist.js        # Books needed/wishlist
-│   │   ├── Request.js         # Exchange requests
-│   │   └── Notification.js    # Notifications
-│   ├── routes/
-│   │   ├── auth.js            # Signup, Login, Profile
-│   │   ├── books.js           # CRUD + Search + Smart Match
-│   │   ├── wishlist.js        # Wishlist management
-│   │   ├── requests.js        # Exchange request workflow
-│   │   ├── notifications.js   # Notification system
-│   │   └── users.js           # People/community
-│   ├── server.js              # Main Express + Socket.IO server
-│   ├── package.json
-│   └── .env.example           # Environment variables template
-└── frontend/
-    └── index.html             # Complete single-file frontend
-```
-
-
 Setup Instructions
 
 1. Prerequisites
