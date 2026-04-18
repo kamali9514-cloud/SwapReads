@@ -1,183 +1,100 @@
-# 📚 SwapReads — Real Backend Book Exchange Platform
+SwapReads — Book Exchange Platform
 
-A full-stack book exchange web app where real users can list, search, and exchange books.
+  A full-stack web application that enables users to list, discover, and exchange books with others. Built with a complete backend system, real-time features, and a responsive frontend.
 
----
+Features
+User authentication (JWT-based signup/login)
+Add, edit, and manage books
+Wishlist system for desired books
+Smart book matching between users
+Exchange request workflow (send → accept/reject → complete)
+Points-based reward system
+User ratings and profiles
+Real-time notifications
+Search and filter functionality
 
-## 🗂 Project Structure
 
-```
+Tech Stack
+
+Frontend:
+
+HTML
+CSS
+JavaScript
+
+Backend:
+
+Node.js
+Express.js
+
+Database:
+
+MongoDB (Atlas)
+
+Other:
+
+Socket.IO (real-time updates)
+JWT (authentication)
+bcrypt (password hashing)
+
+
+Project Structure
 swapreads/
 ├── backend/
-│   ├── config/
-│   │   └── db.js              # MongoDB connection
-│   ├── middleware/
-│   │   └── auth.js            # JWT auth middleware
-│   ├── models/
-│   │   ├── User.js            # User schema
-│   │   ├── Book.js            # Book schema
-│   │   ├── Wishlist.js        # Books needed/wishlist
-│   │   ├── Request.js         # Exchange requests
-│   │   └── Notification.js    # Notifications
-│   ├── routes/
-│   │   ├── auth.js            # Signup, Login, Profile
-│   │   ├── books.js           # CRUD + Search + Smart Match
-│   │   ├── wishlist.js        # Wishlist management
-│   │   ├── requests.js        # Exchange request workflow
-│   │   ├── notifications.js   # Notification system
-│   │   └── users.js           # People/community
-│   ├── server.js              # Main Express + Socket.IO server
-│   ├── package.json
-│   └── .env.example           # Environment variables template
-└── frontend/
-    └── index.html             # Complete single-file frontend
-```
+├── frontend/
 
----
 
-## ⚙️ Setup Instructions
-
-### 1. Prerequisites
-- **Node.js** v18+ — https://nodejs.org
-- **MongoDB** — either:
-  - Local: https://www.mongodb.com/try/download/community
-  - Cloud (recommended): https://www.mongodb.com/atlas (free tier)
-
-### 2. Backend Setup
-
-```bash
-cd swapreads/backend
-
-# Install dependencies
+Setup Instructions
+1. Clone the repository
+git clone https://github.com/your-username/swapreads.git
+cd swapreads
+2. Backend Setup
+cd backend
 npm install
 
-# Create your .env file
-cp .env.example .env
-```
+Create a .env file:
 
-Edit `.env` and fill in:
-
-```env
 PORT=5000
-NODE_ENV=development
-MONGODB_URI=mongodb+srv://youruser:yourpass@cluster0.xxxxx.mongodb.net/swapreads
-JWT_SECRET=make_this_a_long_random_string_minimum_32_chars
-JWT_EXPIRE=7d
+MONGODB_URI=your_mongodb_connection
+JWT_SECRET=your_secret_key
 CLIENT_URL=http://localhost:3000
-```
 
-> **MongoDB Atlas (free cloud DB):**
-> 1. Go to https://cloud.mongodb.com → Create free cluster
-> 2. Database Access → Add user with password
-> 3. Network Access → Allow 0.0.0.0/0
-> 4. Connect → Drivers → Copy connection string → paste in .env
+Start backend:
 
-### 3. Start the Backend
-
-```bash
-# Development (auto-restart on changes)
 npm run dev
+3. Frontend Setup
 
-# Production
-npm start
-```
+Open:
 
-You should see:
-```
-✅ MongoDB Connected: cluster0.xxxxx.mongodb.net
-🚀 SwapReads server running on port 5000
-```
+frontend/index.html
 
-### 4. Frontend Setup
+Or run:
 
-Open `frontend/index.html` in your code editor and verify this line at the top of the `<script>`:
-
-```js
-const API_BASE = 'http://localhost:5000/api';
-```
-
-Change it to your deployed backend URL when going live.
-
-Then simply open `frontend/index.html` in a browser — or serve it:
-
-```bash
-# Quick static server (if you have Python)
-cd frontend
-python3 -m http.server 3000
-
-# Or with Node
 npx serve frontend
-```
 
----
 
-## 🚀 API Endpoints
+Deployment
+Frontend: Netlify
+Backend: Render
+Database: MongoDB Atlas
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| POST | `/api/auth/signup` | ❌ | Register new user |
-| POST | `/api/auth/login` | ❌ | Login |
-| GET | `/api/auth/me` | ✅ | Get current user |
-| PUT | `/api/auth/profile` | ✅ | Update profile |
-| GET | `/api/books` | ❌ | List books (filter/search) |
-| POST | `/api/books` | ✅ | Add a book (+5 pts) |
-| GET | `/api/books/my-books` | ✅ | My books |
-| GET | `/api/books/matches` | ✅ | Smart match |
-| PUT | `/api/books/:id` | ✅ | Update book |
-| DELETE | `/api/books/:id` | ✅ | Delete book |
-| GET | `/api/wishlist` | ✅ | My wishlist |
-| POST | `/api/wishlist` | ✅ | Add to wishlist |
-| DELETE | `/api/wishlist/:id` | ✅ | Remove from wishlist |
-| GET | `/api/requests` | ✅ | My requests |
-| POST | `/api/requests` | ✅ | Send request |
-| PUT | `/api/requests/:id/accept` | ✅ | Accept request |
-| PUT | `/api/requests/:id/reject` | ✅ | Reject request |
-| PUT | `/api/requests/:id/complete` | ✅ | Mark complete (+10 pts) |
-| POST | `/api/requests/:id/rate` | ✅ | Rate exchange |
-| GET | `/api/notifications` | ✅ | Get notifications |
-| PUT | `/api/notifications/read-all` | ✅ | Mark all read |
-| GET | `/api/users` | ✅ | People list |
-| GET | `/api/users/:id` | ❌ | User public profile |
+Update API URL in frontend:
 
----
+const API_BASE = "https://your-backend-url.onrender.com/api";
 
-## 🌐 Deployment
+Security
+Password hashing with bcrypt
+JWT authentication
+Input validation
+CORS protection
 
-### Backend → Render (free)
-1. Push code to GitHub
-2. Go to https://render.com → New Web Service
-3. Connect your repo → set `Root Directory` to `backend`
-4. Build command: `npm install`
-5. Start command: `node server.js`
-6. Add environment variables from `.env`
+API Highlights
+/api/auth → Authentication
+/api/books → Book management
+/api/requests → Exchange system
+/api/wishlist → Wishlist
+/api/notifications → Notifications
 
-### Frontend → Netlify / Vercel (free)
-1. Update `API_BASE` in `index.html` to your Render URL
-2. Drag-drop the `frontend/` folder to https://netlify.com/drop
+Author
+KAMALI S
 
----
-
-## 🔒 Security Features
-- Passwords hashed with **bcrypt** (12 rounds)
-- **JWT** authentication (7-day expiry)
-- **Rate limiting** (200 req/15 min)
-- **Helmet.js** security headers
-- Input validation with **express-validator**
-- XSS protection via HTML escaping in frontend
-- CORS configured to specific origin
-
----
-
-## ✨ Features
-- ✅ Real user auth (signup/login/JWT)
-- ✅ Add books you have (+5 points each)
-- ✅ Wishlist (books you need)
-- ✅ Smart match system (notifies when match found)
-- ✅ Full request workflow (send → accept/reject → complete)
-- ✅ Points system (10 on signup, +5 per book, +10 per exchange)
-- ✅ Star ratings after exchanges
-- ✅ Real-time notifications via Socket.IO
-- ✅ Live request stream feed
-- ✅ User profiles with rating averages
-- ✅ Search with category filters
-- ✅ Edit profile
