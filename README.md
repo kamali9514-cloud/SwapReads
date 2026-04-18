@@ -1,71 +1,105 @@
+SwapReads — Real Backend Book Exchange Platform
+
+A full-stack book exchange web app where real users can list, search, and exchange books.
 
 
-📚 SwapReads — Book Exchange Platform
-Full-stack web application for exchanging books between users
-Built with backend, database, and responsive frontend
-🚀 Features
-JWT-based authentication (signup/login)
-Add, edit, and manage books
-Wishlist system
-Smart book matching
-Exchange workflow (request → accept/reject → complete)
-Points-based system
-User profiles and ratings
-Real-time notifications (Socket.IO)
-Search and filter
-🛠 Tech Stack
-Frontend: HTML, CSS, JavaScript
-Backend: Node.js, Express.js
-Database: MongoDB Atlas
-Other: JWT, bcrypt, Socket.IO
-📂 Project Structure
-backend/ → API, database, auth
-frontend/ → UI
-⚙️ Setup
-git clone https://github.com/your-username/swapreads.git
-cd swapreads
+Project Structure
 
-Backend:
+swapreads/
+├── backend/
+│   ├── config/
+│   │   └── db.js              # MongoDB connection
+│   ├── middleware/
+│   │   └── auth.js            # JWT auth middleware
+│   ├── models/
+│   │   ├── User.js            # User schema
+│   │   ├── Book.js            # Book schema
+│   │   ├── Wishlist.js        # Books needed/wishlist
+│   │   ├── Request.js         # Exchange requests
+│   │   └── Notification.js    # Notifications
+│   ├── routes/
+│   │   ├── auth.js            # Signup, Login, Profile
+│   │   ├── books.js           # CRUD + Search + Smart Match
+│   │   ├── wishlist.js        # Wishlist management
+│   │   ├── requests.js        # Exchange request workflow
+│   │   ├── notifications.js   # Notification system
+│   │   └── users.js           # People/community
+│   ├── server.js              # Main Express + Socket.IO server
+│   ├── package.json
+│   └── .env.example           # Environment variables template
+└── frontend/
+    └── index.html             # Complete single-file frontend
+```
 
-cd backend
+
+Setup Instructions
+
+1. Prerequisites
+- Node.js v18+ — https://nodejs.org
+- MongoDB — either:
+  - Local: https://www.mongodb.com/try/download/community
+  - Cloud: https://www.mongodb.com/atlas (free tier)
+
+2. Backend Setup
+
+cd swapreads/backend
+
+Install dependencies
 npm install
 
-Create .env:
+Create your .env file
+cp .env.example .env
 
+
+Edit .env and fill in:
+
+env
 PORT=5000
-MONGODB_URI=your_connection
-JWT_SECRET=your_secret
+NODE_ENV=development
+MONGODB_URI=mongodb+srv://youruser:yourpass@cluster0.xxxxx.mongodb.net/swapreads
+JWT_SECRET=make_this_a_long_random_string_minimum_32_chars
+JWT_EXPIRE=7d
 CLIENT_URL=http://localhost:3000
+```
 
-Run backend:
+MongoDB Atlas (free cloud DB):
+1. Go to https://cloud.mongodb.com → Create free cluster
+2. Database Access → Add user with password
+3. Network Access → Allow 0.0.0.0/0
+4. Connect → Drivers → Copy connection string → paste in .env
+
+3. Start the Backend
 
 npm run dev
+npm start
 
-Frontend:
+You should see:
 
-Open frontend/index.html
-OR run: npx serve frontend
-🌐 Deployment
-Frontend: Netlify
-Backend: Render
-Database: MongoDB Atlas
+✅ MongoDB Connected: cluster0.xxxxx.mongodb.net
+ SwapReads server running on port 5000
 
-Update API:
 
-const API_BASE = "https://your-backend-url.onrender.com/api
-";
-🔒 Security
-bcrypt password hashing
-JWT authentication
-Input validation
-CORS protection
-📌 API
-/api/auth
-/api/books
-/api/requests
-/api/wishlist
-/api/notifications
-👨‍💻 Author
-Your Name
-📄 License
-MIT License
+ Security Features
+- Passwords hashed with **bcrypt** (12 rounds)
+- **JWT** authentication (7-day expiry)
+- **Rate limiting** (200 req/15 min)
+- **Helmet.js** security headers
+- Input validation with **express-validator**
+- XSS protection via HTML escaping in frontend
+- CORS configured to specific origin
+
+
+
+Features
+-  Real user auth (signup/login/JWT)
+-  Add books you have (+5 points each)
+-  Wishlist (books you need)
+-  Smart match system (notifies when match found)
+-  Full request workflow (send → accept/reject → complete)
+-  Points system (10 on signup, +5 per book, +10 per exchange)
+-  Star ratings after exchanges
+-  Real-time notifications via Socket.IO
+-  Live request stream feed
+-  User profiles with rating averages
+-  Search with category filters
+-  Edit profile
